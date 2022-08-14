@@ -179,7 +179,7 @@ module.exports = {
     ],
     vssueConfig: {
       platform: 'github',
-      owner: 'lanyu',
+      owner: 'lanyuxqh',
       repo: 'blog',
       clientId: 'cc21e3e1dd6c5c86f2c8',
       clientSecret: '443794132323d7c5a7f8a883293e6cc0118e3c79'
