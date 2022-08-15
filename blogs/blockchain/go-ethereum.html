@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>win10环境下go-ethereum源码运行 | 懒鱼</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/blog/avatar.png">
+    <meta name="description" content="人生海海，山山而川，不过尔尔">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.01683485.css" as="style"><link rel="preload" href="/blog/assets/js/app.767c1d45.js" as="script"><link rel="preload" href="/blog/assets/js/3.5b3b20b0.js" as="script"><link rel="preload" href="/blog/assets/js/1.a7b65e1d.js" as="script"><link rel="preload" href="/blog/assets/js/11.fed4df56.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.4c666cfc.js"><link rel="prefetch" href="/blog/assets/js/12.f060f1e7.js"><link rel="prefetch" href="/blog/assets/js/13.43447ef6.js"><link rel="prefetch" href="/blog/assets/js/14.429f90f4.js"><link rel="prefetch" href="/blog/assets/js/15.3184b7e4.js"><link rel="prefetch" href="/blog/assets/js/16.99352a39.js"><link rel="prefetch" href="/blog/assets/js/17.1995f720.js"><link rel="prefetch" href="/blog/assets/js/18.27b3a6b2.js"><link rel="prefetch" href="/blog/assets/js/19.99110ac1.js"><link rel="prefetch" href="/blog/assets/js/20.8c548fcb.js"><link rel="prefetch" href="/blog/assets/js/21.13eac2b0.js"><link rel="prefetch" href="/blog/assets/js/22.bd2f1c3c.js"><link rel="prefetch" href="/blog/assets/js/23.d2388aaa.js"><link rel="prefetch" href="/blog/assets/js/24.3b712d6d.js"><link rel="prefetch" href="/blog/assets/js/25.d378b25b.js"><link rel="prefetch" href="/blog/assets/js/26.3719db06.js"><link rel="prefetch" href="/blog/assets/js/27.261a5d57.js"><link rel="prefetch" href="/blog/assets/js/28.22f6fbd6.js"><link rel="prefetch" href="/blog/assets/js/29.bc72953b.js"><link rel="prefetch" href="/blog/assets/js/30.a299d4bf.js"><link rel="prefetch" href="/blog/assets/js/31.ca09af0a.js"><link rel="prefetch" href="/blog/assets/js/32.08eb1d54.js"><link rel="prefetch" href="/blog/assets/js/33.559f0487.js"><link rel="prefetch" href="/blog/assets/js/34.a7d3058b.js"><link rel="prefetch" href="/blog/assets/js/35.f2b744f4.js"><link rel="prefetch" href="/blog/assets/js/36.4b7b1715.js"><link rel="prefetch" href="/blog/assets/js/37.a473118e.js"><link rel="prefetch" href="/blog/assets/js/38.2c258000.js"><link rel="prefetch" href="/blog/assets/js/39.2c9bd131.js"><link rel="prefetch" href="/blog/assets/js/4.ac5a96e9.js"><link rel="prefetch" href="/blog/assets/js/40.125aa5ff.js"><link rel="prefetch" href="/blog/assets/js/41.a286e290.js"><link rel="prefetch" href="/blog/assets/js/42.dc948af0.js"><link rel="prefetch" href="/blog/assets/js/43.2aba261b.js"><link rel="prefetch" href="/blog/assets/js/44.79ca12f0.js"><link rel="prefetch" href="/blog/assets/js/45.c071131b.js"><link rel="prefetch" href="/blog/assets/js/46.a97f666a.js"><link rel="prefetch" href="/blog/assets/js/47.4e324149.js"><link rel="prefetch" href="/blog/assets/js/48.66516697.js"><link rel="prefetch" href="/blog/assets/js/49.a990c65d.js"><link rel="prefetch" href="/blog/assets/js/5.26b89b3c.js"><link rel="prefetch" href="/blog/assets/js/50.8f10ed76.js"><link rel="prefetch" href="/blog/assets/js/51.b03675bd.js"><link rel="prefetch" href="/blog/assets/js/52.ffa2a8c6.js"><link rel="prefetch" href="/blog/assets/js/53.d70b12e9.js"><link rel="prefetch" href="/blog/assets/js/54.a794f456.js"><link rel="prefetch" href="/blog/assets/js/55.7848c0d3.js"><link rel="prefetch" href="/blog/assets/js/56.64a70648.js"><link rel="prefetch" href="/blog/assets/js/57.831b791b.js"><link rel="prefetch" href="/blog/assets/js/58.5f226ab6.js"><link rel="prefetch" href="/blog/assets/js/59.f9a613e4.js"><link rel="prefetch" href="/blog/assets/js/6.0fc8488b.js"><link rel="prefetch" href="/blog/assets/js/60.98cfd51c.js"><link rel="prefetch" href="/blog/assets/js/61.c196fc63.js"><link rel="prefetch" href="/blog/assets/js/62.90e8a05d.js"><link rel="prefetch" href="/blog/assets/js/63.c8677f4b.js"><link rel="prefetch" href="/blog/assets/js/64.69353029.js"><link rel="prefetch" href="/blog/assets/js/65.6c53584f.js"><link rel="prefetch" href="/blog/assets/js/66.03c32edc.js"><link rel="prefetch" href="/blog/assets/js/67.7bd7587c.js"><link rel="prefetch" href="/blog/assets/js/68.a1b68cfb.js"><link rel="prefetch" href="/blog/assets/js/69.6f22e617.js"><link rel="prefetch" href="/blog/assets/js/7.0523ec6a.js"><link rel="prefetch" href="/blog/assets/js/70.03cf54c8.js"><link rel="prefetch" href="/blog/assets/js/71.21f90326.js"><link rel="prefetch" href="/blog/assets/js/72.ea97d1c2.js"><link rel="prefetch" href="/blog/assets/js/73.a7ddfc0c.js"><link rel="prefetch" href="/blog/assets/js/74.89e673f2.js"><link rel="prefetch" href="/blog/assets/js/75.e3a75c0f.js"><link rel="prefetch" href="/blog/assets/js/76.bd834327.js"><link rel="prefetch" href="/blog/assets/js/77.40d1a998.js"><link rel="prefetch" href="/blog/assets/js/78.5e9d45f3.js"><link rel="prefetch" href="/blog/assets/js/79.9a054c04.js"><link rel="prefetch" href="/blog/assets/js/8.fef34909.js"><link rel="prefetch" href="/blog/assets/js/80.ed750a97.js"><link rel="prefetch" href="/blog/assets/js/81.43b9c4b4.js"><link rel="prefetch" href="/blog/assets/js/82.bea13091.js"><link rel="prefetch" href="/blog/assets/js/83.88e55f9d.js"><link rel="prefetch" href="/blog/assets/js/84.af35c349.js"><link rel="prefetch" href="/blog/assets/js/85.5aedbb0b.js"><link rel="prefetch" href="/blog/assets/js/86.61c33d66.js"><link rel="prefetch" href="/blog/assets/js/87.a3a269cf.js"><link rel="prefetch" href="/blog/assets/js/88.64f9ab21.js"><link rel="prefetch" href="/blog/assets/js/89.3fe12dff.js"><link rel="prefetch" href="/blog/assets/js/9.4a79c775.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.01683485.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-1aefc0b4><div data-v-1aefc0b4><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-1aefc0b4 data-v-1aefc0b4><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-25ba6db2 data-v-1aefc0b4 data-v-1aefc0b4><h3 class="title" data-v-25ba6db2 data-v-25ba6db2>懒鱼</h3> <p class="description" data-v-25ba6db2 data-v-25ba6db2>人生海海，山山而川，不过尔尔</p> <label id="box" class="inputBox" data-v-25ba6db2 data-v-25ba6db2><input type="password" value="" data-v-25ba6db2> <span data-v-25ba6db2>Konck! Knock!</span> <button data-v-25ba6db2>OK</button></label> <div class="footer" data-v-25ba6db2 data-v-25ba6db2><span data-v-25ba6db2><i class="iconfont reco-theme" data-v-25ba6db2></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-25ba6db2>vuePress-theme-reco</a></span> <span data-v-25ba6db2><i class="iconfont reco-copyright" data-v-25ba6db2></i> <a data-v-25ba6db2><span data-v-25ba6db2>懒鱼</span>
+            
+          <span data-v-25ba6db2>2021 - </span>
+          2022
+        </a></span></div></div> <div class="hide" data-v-1aefc0b4><header class="navbar" data-v-1aefc0b4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><img src="/blog/avatar.png" alt="懒鱼" class="logo"> <span class="site-name">懒鱼</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/categories/区块链/" class="nav-link"><i class="undefined"></i>
+  区块链
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/浏览器/" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/计算机网络/" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/css/" class="nav-link"><i class="undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/es6/" class="nav-link"><i class="undefined"></i>
+  es6
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/javascript/" class="nav-link"><i class="undefined"></i>
+  javascript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/html/" class="nav-link"><i class="undefined"></i>
+  html
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/读书笔记/" class="nav-link"><i class="undefined"></i>
+  读书笔记
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/vue/" class="nav-link"><i class="undefined"></i>
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/webpack/" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><a href="/blog/others/message-board.html" class="nav-link"><i class="iconfont reco-suggestion"></i>
+  留言板
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-account"></i>
+      关于我
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/lanyuxqh" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://lanyuxqh.github.io/xqh-vue-ui-doc/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-document"></i>
+  xqh-vue-ui
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-1aefc0b4></div> <aside class="sidebar" data-v-1aefc0b4><div class="personal-info-wrapper" data-v-39576ba9 data-v-1aefc0b4><img src="/blog/avatar.png" alt="author-avatar" class="personal-img" data-v-39576ba9> <h3 class="name" data-v-39576ba9>
+    懒鱼
+  </h3> <div class="num" data-v-39576ba9><div data-v-39576ba9><h3 data-v-39576ba9>77</h3> <h6 data-v-39576ba9>文章</h6></div> <div data-v-39576ba9><h3 data-v-39576ba9>13</h3> <h6 data-v-39576ba9>标签</h6></div></div> <ul class="social-links" data-v-39576ba9></ul> <hr data-v-39576ba9></div> <nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/categories/区块链/" class="nav-link"><i class="undefined"></i>
+  区块链
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/浏览器/" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/刷题/" class="nav-link"><i class="undefined"></i>
+  刷题
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/计算机网络/" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/css/" class="nav-link"><i class="undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/es6/" class="nav-link"><i class="undefined"></i>
+  es6
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/javascript/" class="nav-link"><i class="undefined"></i>
+  javascript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/html/" class="nav-link"><i class="undefined"></i>
+  html
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/读书笔记/" class="nav-link"><i class="undefined"></i>
+  读书笔记
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/vue/" class="nav-link"><i class="undefined"></i>
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/webpack/" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><a href="/blog/others/message-board.html" class="nav-link"><i class="iconfont reco-suggestion"></i>
+  留言板
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-account"></i>
+      关于我
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/lanyuxqh" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://lanyuxqh.github.io/xqh-vue-ui-doc/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-document"></i>
+  xqh-vue-ui
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-25ba6db2 data-v-1aefc0b4><h3 class="title" data-v-25ba6db2 data-v-25ba6db2>win10环境下go-ethereum源码运行</h3> <!----> <label id="box" class="inputBox" data-v-25ba6db2 data-v-25ba6db2><input type="password" value="" data-v-25ba6db2> <span data-v-25ba6db2>Konck! Knock!</span> <button data-v-25ba6db2>OK</button></label> <div class="footer" data-v-25ba6db2 data-v-25ba6db2><span data-v-25ba6db2><i class="iconfont reco-theme" data-v-25ba6db2></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-25ba6db2>vuePress-theme-reco</a></span> <span data-v-25ba6db2><i class="iconfont reco-copyright" data-v-25ba6db2></i> <a data-v-25ba6db2><span data-v-25ba6db2>懒鱼</span>
+            
+          <span data-v-25ba6db2>2021 - </span>
+          2022
+        </a></span></div></div> <div data-v-1aefc0b4><main class="page"><section><div class="page-title"><h1 class="title">win10环境下go-ethereum源码运行</h1> <div data-v-f875f3fc><i class="iconfont reco-account" data-v-f875f3fc><span data-v-f875f3fc>懒鱼</span></i> <i class="iconfont reco-date" data-v-f875f3fc><span data-v-f875f3fc>2021/10/27</span></i> <!----> <i class="tags iconfont reco-tag" data-v-f875f3fc><span class="tag-item" data-v-f875f3fc>区块链</span></i></div></div> <div class="theme-reco-content content__default"><h1 id="win10-环境下-go-ethereum-源码运行"><a href="#win10-环境下-go-ethereum-源码运行" class="header-anchor">#</a> win10 环境下 go-ethereum 源码运行</h1> <h2 id="go-ethereum-源码运行"><a href="#go-ethereum-源码运行" class="header-anchor">#</a> go-ethereum 源码运行</h2> <h3 id="环境搭建-win10"><a href="#环境搭建-win10" class="header-anchor">#</a> 环境搭建（win10）</h3> <ol><li><p>go 安装、配置环境</p> <ul><li>参考资料：https://www.liuyixiang.com/post/113425.html ps：区分 GOROOT（安装目录）和 GOPATH（工作目录）</li> <li>在 GOPATH（工作目录）下创建三个文件夹
+<ul><li>bin</li> <li>pkg</li> <li>src（之后放代码的地方）</li></ul></li> <li>为防止后面 go get 失败，在这里设置代理
+<ul><li><code>go env -w GO111MODULE=on</code></li> <li><code>go env -w GOPROXY=https://goproxy.cn,direct</code></li></ul></li> <li>查看是否配置成功，命令行输入<code>go env</code>。</li></ul></li> <li><p>Goland 安装</p> <ul><li>参考资料：https://www.cnblogs.com/randysun/p/15396074.html</li></ul></li> <li><p>安装 MinGW-w64</p> <ul><li><p>为了解决 win10 下 make 命令不能用的问题。</p></li> <li><p>参考资料：https://www.cnblogs.com/findumars/p/8289454.html</p></li> <li><p>安装且配置完成后，命令行输入<code>make -v</code>，如果还是不行，把 bin 下的 mingw32-make.exe 改名为 make.exe 就可以了。</p></li></ul></li></ol> <h3 id="源码编译"><a href="#源码编译" class="header-anchor">#</a> 源码编译</h3> <ol><li><p>下载 go-ethereum 源码</p> <ul><li><code>go get -u -v github.com/ethereum/go-ethereum</code></li> <li>源码会下载到工作目录下的 src/github.com</li></ul></li> <li><p>按照官网的在 go-ethereum 目录下进行 make（失败）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 报错信息
+D:\go\src\github.com\ethereum\go-ethereum&gt;make
+env GO111MODULE=on go run build/ci.go install ./cmd/geth
+process_begin: CreateProcess(NULL, env GO111MODULE=on go run build/ci.go install ./cmd/geth, ...) failed.
+make (e=2): 系统找不到指定的文件。
+make: *** [Makefile:12: geth] Error 2
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>由于找不到解决方案，换另一种方式，不用源码中 makefile 文件进行编译，直接用<code>go run build/ci.go install ./cmd/geth</code></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>D:\go\src\github.com\ethereum\go-ethereum&gt;go run build/ci.go install ./cmd/geth
+go: downloading github.com/cespare/cp v0.1.0
+go: downloading github.com/Azure/azure-storage-blob-go v0.7.0
+go: downloading github.com/Azure/azure-pipeline-go v0.2.2
+go: downloading github.com/mattn/go-ieproxy v0.0.0-20190702010315-6dee0af9227d
+&gt;&gt;&gt; C:\Program Files\Go\bin\go build -ldflags -X main.gitCommit=526c3f6b9e99fe750b8e38c53264f0204cab1422 -X main.gitDate=20211026 -trimpath -v -o D:\go\src\github.com\ethereum\go-ethereum\build\bin\geth.exe ./cmd/geth
+internal/unsafeheader
+internal/race
+此处省略...
+github.com/ethereum/go-ethereum/internal/jsre
+github.com/ethereum/go-ethereum/console
+##  gopkg.in/olebedev/go-duktape.v3
+duk_minimal_printf.c: In function 'duk__parse_pointer':
+duk_minimal_printf.c:126:9: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  *out = (void *) val;
+         ^
+duk_minimal_printf.c: In function 'duk_minimal_vsnprintf':
+duk_minimal_printf.c:236:76: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+     off = duk__format_long(str, size, off, sizeof(void *) * 2, '0', 16, 0, (unsigned long) v);
+                                                                            ^
+github.com/ethereum/go-ethereum/eth/tracers
+github.com/ethereum/go-ethereum/cmd/utils
+github.com/ethereum/go-ethereum/cmd/geth
+
+// 成功
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><p>编译成功后，可以在 D:\go\src\github.com\ethereum\go-ethereum\build\bin 下找到 geth.exe。</p></li> <li><p>查看 geth 命令</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>D:\go\src\github.com\ethereum\go-ethereum\build\bin&gt;geth --help
+NAME:
+   geth - the go-ethereum command line interface
+
+   Copyright 2013-2021 The go-ethereum Authors
+
+USAGE:
+   geth [options] [command] [command options] [arguments...]
+
+VERSION:
+   1.10.12-unstable-526c3f6b-20211026
+
+COMMANDS:
+   account                            Manage accounts
+   attach                             Start an interactive JavaScript environment (connect to node)
+   console                            Start an interactive JavaScript environment
+   db                                 Low level database operations
+   dump                               Dump a specific block from storage
+   dumpconfig                         Show configuration values
+   dumpgenesis                        Dumps genesis block JSON configuration to stdout
+   export                             Export blockchain into file
+   export-preimages                   Export the preimage database into an RLP stream
+   import                             Import a blockchain file
+   import-preimages                   Import the preimage database from an RLP stream
+   init                               Bootstrap and initialize a new genesis block
+   js                                 Execute the specified JavaScript files
+   license                            Display license information
+   makecache                          Generate ethash verification cache (for testing)
+   makedag                            Generate ethash mining DAG (for testing)
+   removedb                           Remove blockchain and state databases
+   show-deprecated-flags              Show flags that have been deprecated
+   snapshot                           A set of commands based on the snapshot
+   version                            Print version numbers
+   version-check                      Checks (online) whether the current version suffers from any known security vulnerabilities
+   wallet                             Manage Ethereum presale wallets
+   help, h                            Shows a list of commands or help for one command
+
+ETHEREUM OPTIONS:
+  --config value                      TOML configuration file
+  --datadir value                     Data directory for the databases and keystore (default: &quot;C:\\Users\\徐倩慧\\AppData\\Roaming\\Ethereum&quot;)
+  --datadir.ancient value             Data directory for ancient chain segments (default = inside chaindata)
+  --datadir.minfreedisk value         Minimum free disk space in MB, once reached triggers auto shut down (default = --cache.gc converted to MB, 0 = disabled)
+  --keystore value                    Directory for the keystore (default = inside the datadir)
+  --usb                               Enable monitoring and management of USB hardware wallets
+  --pcscdpath value                   Path to the smartcard daemon (pcscd) socket file
+  --networkid value                   Explicitly set network id (integer)(For testnets: use --ropsten, --rinkeby, --goerli instead) (default: 1)
+  --mainnet                           Ethereum mainnet
+  --goerli                            Görli network: pre-configured proof-of-authority test network
+  --rinkeby                           Rinkeby network: pre-configured proof-of-authority test network
+  --ropsten                           Ropsten network: pre-configured proof-of-work test network
+  --syncmode value                    Blockchain sync mode (&quot;fast&quot;, &quot;full&quot;, &quot;snap&quot; or &quot;light&quot;) (default: snap)
+  --exitwhensynced                    Exits after block synchronisation completes
+  --gcmode value                      Blockchain garbage collection mode (&quot;full&quot;, &quot;archive&quot;) (default: &quot;full&quot;)
+  --txlookuplimit value               Number of recent blocks to maintain transactions index for (default = about one year, 0 = entire chain) (default: 2350000)
+  --ethstats value                    Reporting URL of a ethstats service (nodename:secret@host:port)
+  --identity value                    Custom node name
+  --lightkdf                          Reduce key-derivation RAM &amp; CPU usage at some expense of KDF strength
+  --whitelist value                   Comma separated block number-to-hash mappings to enforce (&lt;number&gt;=&lt;hash&gt;)
+
+LIGHT CLIENT OPTIONS:
+  --light.serve value                 Maximum percentage of time allowed for serving LES requests (multi-threaded processing allows values over 100) (default: 0)
+  --light.ingress value               Incoming bandwidth limit for serving light clients (kilobytes/sec, 0 = unlimited) (default: 0)
+  --light.egress value                Outgoing bandwidth limit for serving light clients (kilobytes/sec, 0 = unlimited) (default: 0)
+  --light.maxpeers value              Maximum number of light clients to serve, or light servers to attach to (default: 100)
+  --ulc.servers value                 List of trusted ultra-light servers
+  --ulc.fraction value                Minimum % of trusted ultra-light servers required to announce a new head (default: 75)
+  --ulc.onlyannounce                  Ultra light server sends announcements only
+  --light.nopruning                   Disable ancient light chain data pruning
+  --light.nosyncserve                 Enables serving light clients before syncing
+
+DEVELOPER CHAIN OPTIONS:
+  --dev                               Ephemeral proof-of-authority network with a pre-funded developer account, mining enabled
+  --dev.period value                  Block period to use in developer mode (0 = mine only if transaction pending) (default: 0)
+
+ETHASH OPTIONS:
+  --ethash.cachedir value             Directory to store the ethash verification caches (default = inside the datadir)
+  --ethash.cachesinmem value          Number of recent ethash caches to keep in memory (16MB each) (default: 2)
+  --ethash.cachesondisk value         Number of recent ethash caches to keep on disk (16MB each) (default: 3)
+  --ethash.cacheslockmmap             Lock memory maps of recent ethash caches
+  --ethash.dagdir value               Directory to store the ethash mining DAGs (default: &quot;C:\\Users\\徐倩慧\\AppData\\Local\\Ethash&quot;)
+  --ethash.dagsinmem value            Number of recent ethash mining DAGs to keep in memory (1+GB each) (default: 1)
+  --ethash.dagsondisk value           Number of recent ethash mining DAGs to keep on disk (1+GB each) (default: 2)
+  --ethash.dagslockmmap               Lock memory maps for recent ethash mining DAGs
+
+TRANSACTION POOL OPTIONS:
+  --txpool.locals value               Comma separated accounts to treat as locals (no flush, priority inclusion)
+  --txpool.nolocals                   Disables price exemptions for locally submitted transactions
+  --txpool.journal value              Disk journal for local transaction to survive node restarts (default: &quot;transactions.rlp&quot;)
+  --txpool.rejournal value            Time interval to regenerate the local transaction journal (default: 1h0m0s)
+  --txpool.pricelimit value           Minimum gas price limit to enforce for acceptance into the pool (default: 1)
+  --txpool.pricebump value            Price bump percentage to replace an already existing transaction (default: 10)
+  --txpool.accountslots value         Minimum number of executable transaction slots guaranteed per account (default: 16)
+  --txpool.globalslots value          Maximum number of executable transaction slots for all accounts (default: 5120)
+  --txpool.accountqueue value         Maximum number of non-executable transaction slots permitted per account (default: 64)
+  --txpool.globalqueue value          Maximum number of non-executable transaction slots for all accounts (default: 1024)
+  --txpool.lifetime value             Maximum amount of time non-executable transaction are queued (default: 3h0m0s)
+
+PERFORMANCE TUNING OPTIONS:
+  --cache value                       Megabytes of memory allocated to internal caching (default = 4096 mainnet full node, 128 light mode) (default: 1024)
+  --cache.database value              Percentage of cache memory allowance to use for database io (default: 50)
+  --cache.trie value                  Percentage of cache memory allowance to use for trie caching (default = 15% full mode, 30% archive mode) (default: 15)
+  --cache.trie.journal value          Disk journal directory for trie cache to survive node restarts (default: &quot;triecache&quot;)
+  --cache.trie.rejournal value        Time interval to regenerate the trie cache journal (default: 1h0m0s)
+  --cache.gc value                    Percentage of cache memory allowance to use for trie pruning (default = 25% full mode, 0% archive mode) (default: 25)
+  --cache.snapshot value              Percentage of cache memory allowance to use for snapshot caching (default = 10% full mode, 20% archive mode) (default: 10)
+  --cache.noprefetch                  Disable heuristic state prefetch during block import (less CPU and disk IO, more time waiting for data)
+  --cache.preimages                   Enable recording the SHA3/keccak preimages of trie keys
+
+ACCOUNT OPTIONS:
+  --unlock value                      Comma separated list of accounts to unlock
+  --password value                    Password file to use for non-interactive password input
+  --signer value                      External signer (url or path to ipc file)
+  --allow-insecure-unlock             Allow insecure account unlocking when account-related RPCs are exposed by http
+
+API AND CONSOLE OPTIONS:
+  --ipcdisable                        Disable the IPC-RPC server
+  --ipcpath value                     Filename for IPC socket/pipe within the datadir (explicit paths escape it)
+  --http                              Enable the HTTP-RPC server
+  --http.addr value                   HTTP-RPC server listening interface (default: &quot;localhost&quot;)
+  --http.port value                   HTTP-RPC server listening port (default: 8545)
+  --http.api value                    API's offered over the HTTP-RPC interface
+  --http.rpcprefix value              HTTP path path prefix on which JSON-RPC is served. Use '/' to serve on all paths.
+  --http.corsdomain value             Comma separated list of domains from which to accept cross origin requests (browser enforced)
+  --http.vhosts value                 Comma separated list of virtual hostnames from which to accept requests (server enforced). Accepts '*' wildcard. (default: &quot;localhost&quot;)
+  --ws                                Enable the WS-RPC server
+  --ws.addr value                     WS-RPC server listening interface (default: &quot;localhost&quot;)
+  --ws.port value                     WS-RPC server listening port (default: 8546)
+  --ws.api value                      API's offered over the WS-RPC interface
+  --ws.rpcprefix value                HTTP path prefix on which JSON-RPC is served. Use '/' to serve on all paths.
+  --ws.origins value                  Origins from which to accept websockets requests
+  --graphql                           Enable GraphQL on the HTTP-RPC server. Note that GraphQL can only be started if an HTTP server is started as well.
+  --graphql.corsdomain value          Comma separated list of domains from which to accept cross origin requests (browser enforced)
+  --graphql.vhosts value              Comma separated list of virtual hostnames from which to accept requests (server enforced). Accepts '*' wildcard. (default: &quot;localhost&quot;)
+  --rpc.gascap value                  Sets a cap on gas that can be used in eth_call/estimateGas (0=infinite) (default: 50000000)
+  --rpc.evmtimeout value              Sets a timeout used for eth_call (0=infinite) (default: 5s)
+  --rpc.txfeecap value                Sets a cap on transaction fee (in ether) that can be sent via the RPC APIs (0 = no cap) (default: 1)
+  --rpc.allow-unprotected-txs         Allow for unprotected (non EIP155 signed) transactions to be submitted via RPC
+  --jspath loadScript                 JavaScript root path for loadScript (default: &quot;.&quot;)
+  --exec value                        Execute JavaScript statement
+  --preload value                     Comma separated list of JavaScript files to preload into the console
+
+NETWORKING OPTIONS:
+  --bootnodes value                   Comma separated enode URLs for P2P discovery bootstrap
+  --discovery.dns value               Sets DNS discovery entry points (use &quot;&quot; to disable DNS)
+  --port value                        Network listening port (default: 30303)
+  --maxpeers value                    Maximum number of network peers (network disabled if set to 0) (default: 50)
+  --maxpendpeers value                Maximum number of pending connection attempts (defaults used if set to 0) (default: 0)
+  --nat value                         NAT port mapping mechanism (any|none|upnp|pmp|extip:&lt;IP&gt;) (default: &quot;any&quot;)
+  --nodiscover                        Disables the peer discovery mechanism (manual peer addition)
+  --v5disc                            Enables the experimental RLPx V5 (Topic Discovery) mechanism
+  --netrestrict value                 Restricts network communication to the given IP networks (CIDR masks)
+  --nodekey value                     P2P node key file
+  --nodekeyhex value                  P2P node key as hex (for testing)
+
+MINER OPTIONS:
+  --mine                              Enable mining
+  --miner.threads value               Number of CPU threads to use for mining (default: 0)
+  --miner.notify value                Comma separated HTTP URL list to notify of new work packages
+  --miner.notify.full                 Notify with pending block headers instead of work packages
+  --miner.gasprice value              Minimum gas price for mining a transaction (default: 1000000000)
+  --miner.gaslimit value              Target gas ceiling for mined blocks (default: 8000000)
+  --miner.etherbase value             Public address for block mining rewards (default = first account) (default: &quot;0&quot;)
+  --miner.extradata value             Block extra data set by the miner (default = client version)
+  --miner.recommit value              Time interval to recreate the block being mined (default: 3s)
+  --miner.noverify                    Disable remote sealing verification
+
+GAS PRICE ORACLE OPTIONS:
+  --gpo.blocks value                  Number of recent blocks to check for gas prices (default: 20)
+  --gpo.percentile value              Suggested gas price is the given percentile of a set of recent transaction gas prices (default: 60)
+  --gpo.maxprice value                Maximum transaction priority fee (or gasprice before London fork) to be recommended by gpo (default: 500000000000)
+  --gpo.ignoreprice value             Gas price below which gpo will ignore transactions (default: 2)
+
+VIRTUAL MACHINE OPTIONS:
+  --vmdebug                           Record information useful for VM and contract debugging
+
+LOGGING AND DEBUGGING OPTIONS:
+  --fakepow                           Disables proof-of-work verification
+  --nocompaction                      Disables db compaction after import
+  --verbosity value                   Logging verbosity: 0=silent, 1=error, 2=warn, 3=info, 4=debug, 5=detail (default: 3)
+  --vmodule value                     Per-module verbosity: comma-separated list of &lt;pattern&gt;=&lt;level&gt; (e.g. eth/*=5,p2p=4)
+  --log.json                          Format logs with JSON
+  --log.backtrace value               Request a stack trace at a specific logging statement (e.g. &quot;block.go:271&quot;)
+  --log.debug                         Prepends log messages with call-site location (file and line number)
+  --pprof                             Enable the pprof HTTP server
+  --pprof.addr value                  pprof HTTP server listening interface (default: &quot;127.0.0.1&quot;)
+  --pprof.port value                  pprof HTTP server listening port (default: 6060)
+  --pprof.memprofilerate value        Turn on memory profiling with the given rate (default: 524288)
+  --pprof.blockprofilerate value      Turn on block profiling with the given rate (default: 0)
+  --pprof.cpuprofile value            Write CPU profile to the given file
+  --trace value                       Write execution trace to the given file
+
+METRICS AND STATS OPTIONS:
+  --metrics                              Enable metrics collection and reporting
+  --metrics.expensive                    Enable expensive metrics collection and reporting
+  --metrics.addr value                   Enable stand-alone metrics HTTP server listening interface (default: &quot;127.0.0.1&quot;)
+  --metrics.port value                   Metrics HTTP server listening port (default: 6060)
+  --metrics.influxdb                     Enable metrics export/push to an external InfluxDB database
+  --metrics.influxdb.endpoint value      InfluxDB API endpoint to report metrics to (default: &quot;http://localhost:8086&quot;)
+  --metrics.influxdb.database value      InfluxDB database name to push reported metrics to (default: &quot;geth&quot;)
+  --metrics.influxdb.username value      Username to authorize access to the database (default: &quot;test&quot;)
+  --metrics.influxdb.password value      Password to authorize access to the database (default: &quot;test&quot;)
+  --metrics.influxdb.tags value          Comma-separated InfluxDB tags (key/values) attached to all measurements (default: &quot;host=localhost&quot;)
+  --metrics.influxdbv2                   Enable metrics export/push to an external InfluxDB v2 database
+  --metrics.influxdb.token value         Token to authorize access to the database (v2 only) (default: &quot;test&quot;)
+  --metrics.influxdb.bucket value        InfluxDB bucket name to push reported metrics to (v2 only) (default: &quot;geth&quot;)
+  --metrics.influxdb.organization value  InfluxDB organization name (v2 only) (default: &quot;geth&quot;)
+
+ALIASED (deprecated) OPTIONS:
+  --nousb                             Disables monitoring for and managing USB hardware wallets (deprecated)
+
+MISC OPTIONS:
+  --snapshot                          Enables snapshot-database mode (default = enable)
+  --bloomfilter.size value            Megabytes of memory allocated to bloom-filter for pruning (default: 2048)
+  --help, -h                          show help
+  --catalyst                          Catalyst mode (eth2 integration testing)
+  --override.london value             Manually specify London fork-block, overriding the bundled setting (default: 0)
+
+
+COPYRIGHT:
+   Copyright 2013-2021 The go-ethereum Authors
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br><span class="line-number">189</span><br><span class="line-number">190</span><br><span class="line-number">191</span><br><span class="line-number">192</span><br><span class="line-number">193</span><br><span class="line-number">194</span><br><span class="line-number">195</span><br><span class="line-number">196</span><br><span class="line-number">197</span><br><span class="line-number">198</span><br><span class="line-number">199</span><br><span class="line-number">200</span><br><span class="line-number">201</span><br><span class="line-number">202</span><br><span class="line-number">203</span><br><span class="line-number">204</span><br><span class="line-number">205</span><br><span class="line-number">206</span><br><span class="line-number">207</span><br><span class="line-number">208</span><br><span class="line-number">209</span><br><span class="line-number">210</span><br><span class="line-number">211</span><br><span class="line-number">212</span><br><span class="line-number">213</span><br><span class="line-number">214</span><br><span class="line-number">215</span><br><span class="line-number">216</span><br><span class="line-number">217</span><br><span class="line-number">218</span><br><span class="line-number">219</span><br><span class="line-number">220</span><br></div></div></li></ol> <h3 id="geth-搭建私有链网络"><a href="#geth-搭建私有链网络" class="header-anchor">#</a> geth 搭建私有链网络</h3> <ol><li><p>初始化创世块</p> <ul><li><p>创建 privateChain 目录，我是 D:\privateChain</p></li> <li><p>在 D:\privateChain 目录下新建一个文件 genesis.json 来放置创世块（第 0 号区块）的配置信息。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>{
+  &quot;config&quot;: {
+    &quot;chainId&quot;: 15,
+    &quot;homesteadBlock&quot;: 0,
+    &quot;eip150Block&quot;: 0,
+    &quot;eip155Block&quot;: 0,
+    &quot;eip158Block&quot;: 0,
+    &quot;byzantiumBlock&quot;: 0,
+    &quot;constantinopleBlock&quot;: 0,
+    &quot;petersburgBlock&quot;: 0,
+    &quot;ethash&quot;: {}
+  },
+  &quot;difficulty&quot;: &quot;2000&quot;,
+  &quot;gasLimit&quot;: &quot;8000000&quot;,
+  &quot;alloc&quot;: {
+    &quot;7df9a875a174b3bc565e6424a0050ebc1b2d1d82&quot;: { &quot;balance&quot;: &quot;300000&quot; },
+    &quot;f41c74c9ae680c1aa78f42e5647a62f353b7bdde&quot;: { &quot;balance&quot;: &quot;400000&quot; }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div></li> <li><p>用上面这个配置文件来初始化创世块，需要进入 D:\go\src\github.com\ethereum\go-ethereum\build\bin 目录</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>D:\go\src\github.com\ethereum\go-ethereum\build\bin&gt;geth init --datadir D:\privateChain D:\privateChain\genesis.json
+INFO [10-27|16:12:23.152] Maximum peer count                       ETH=50 LES=0 total=50
+INFO [10-27|16:12:23.217] Set global gas cap                       cap=50,000,000
+INFO [10-27|16:12:23.221] Allocated cache and file handles         database=D:\privateChain\geth\chaindata cache=16.00MiB handles=16
+INFO [10-27|16:12:23.325] Writing custom genesis block
+INFO [10-27|16:12:23.328] Persisted trie from memory database      nodes=3 size=397.00B time=&quot;35.2µs&quot; gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
+INFO [10-27|16:12:23.334] Successfully wrote genesis state         database=chaindata                      hash=b8627b..6f1af8
+INFO [10-27|16:12:23.337] Allocated cache and file handles         database=D:\privateChain\geth\lightchaindata cache=16.00MiB handles=16
+INFO [10-27|16:12:23.475] Writing custom genesis block
+INFO [10-27|16:12:23.478] Persisted trie from memory database      nodes=3 size=397.00B time=&quot;527µs&quot;  gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
+INFO [10-27|16:12:23.483] Successfully wrote genesis state         database=lightchaindata                      hash=b8627b..6f1af8
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div></li></ul></li> <li><p>启动私有链网络</p> <ul><li><p>执行命令行</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>D:\go\src\github.com\ethereum\go-ethereum\build\bin&gt;geth --datadir D:\privateChain --dev --http --http.addr 127.0.0.1 --http.port 8545 --http.api &quot;web3,eth,personal,net&quot; console 2&gt;&gt;D:\privateChain/geth.log --allow-insecure-unlock
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.10.12-unstable-526c3f6b-20211026/windows-amd64/go1.16.5
+coinbase: 0xab7924b47c7ec50aae6c65b06ec8fe2f59f85aed
+at block: 0 (Thu Jan 01 1970 08:00:00 GMT+0800 (CST))
+ datadir: D:\privateChain
+ modules: admin:1.0 debug:1.0 eth:1.0 ethash:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+To exit, press ctrl-d or type exit
+&gt;
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div></li> <li><p>命令分析</p> <ul><li>--datadir D:\privateChain // 数据库和 keystore 密钥的数据目录</li> <li>--dev // 开发者模式，使用 POA 共识网络，默认预分配一个开发者账户并且会自动开启挖矿。</li> <li>--http --http.addr 127.0.0.1 --http.port 8545 --http.api &quot;web3,eth,personal,net&quot; // 启用 HTTP 服务器，设置接口地址、监听端口、api（这里可能是最新版本的缘故，跟以前的命令不太一样，以前的是 --rpc，具体可以通过 geth --help 查看当前可用命令）</li> <li>console // 启动交互式 JavaScript 环境</li> <li>2&gt;&gt;D:\privateChain/geth.log // 打印信息不显示在命令行，写入指定文件</li> <li>--allow-insecure-unlock // 打开 HTTP 通道解锁账户</li></ul></li> <li><p>D:\privateChain 目录分析</p> <ul><li>geth：数据库</li> <li>keystore：账户密钥（启动后会有自动创建一个账户，但由于不知道密码，可以先删除，之后手动再创建）</li> <li>genesis.json：创世块信息</li> <li>geth.log：打印信息</li></ul></li></ul></li> <li><p>geth 常用命令</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>D:\go\src\github.com\ethereum\go-ethereum\build\bin&gt;geth --datadir D:\privateChain --dev.period 0 --http --http.addr 127.0.0.1 --http.port 8545 --http.api &quot;web3,eth,personal,net&quot; console 2&gt;&gt;D:\privateChain/geth.log --allow-insecure-unlock
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.10.12-unstable-526c3f6b-20211026/windows-amd64/go1.16.5
+coinbase: 0x372dd6b9d766b3164165ce40c09f6b6b49d594c5
+at block: 27 (Wed Oct 27 2021 16:45:47 GMT+0800 (CST))
+ datadir: D:\privateChain
+ modules: admin:1.0 debug:1.0 eth:1.0 ethash:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+To exit, press ctrl-d or type exit
+&gt; personal.newAccount()   // 创建账户、设置密码
+Passphrase:
+Repeat passphrase:
+&quot;0xab308aca678b679926295d0119984558f057cc25&quot;
+&gt; eth.accounts   // 查看账户列表
+[&quot;0xab308aca678b679926295d0119984558f057cc25&quot;]
+&gt; eth.getBalance(eth.accounts[0])  // 查看账户余额
+0
+&gt; miner.setEtherbase(eth.accounts[0])  // 设置挖矿收益者
+true
+&gt; miner.start()  // 开始挖矿
+null
+&gt; miner.stop()   // 结束挖矿
+null
+&gt; eth.getBalance(eth.accounts[0])
+64000000000000000000
+&gt; web3.fromWei(eth.getBalance(eth.accounts[0]), 'ether')  // 余额单位转换
+64
+&gt; eth.blockNumber  // 查看区块高度
+60
+&gt; personal.newAccount()  // 创建另一个账户
+Passphrase:
+Repeat passphrase:
+&quot;0x48ada6211841615ab9d619210fdd0a5db268bdce&quot;
+&gt; eth.accounts
+[&quot;0xab308aca678b679926295d0119984558f057cc25&quot;, &quot;0x48ada6211841615ab9d619210fdd0a5db268bdce&quot;]
+&gt; eth.getBalance(eth.accounts[1])
+0
+&gt; eth.sendTransaction({from: eth.accounts[0], to: eth.accounts[1], value: 4000000000000000000})  // 发送交易失败，因为没有解锁账户
+Error: authentication needed: password or unlock
+        at web3.js:6357:37(47)
+        at send (web3.js:5091:62(35))
+        at &lt;eval&gt;:1:20(16)
+&gt; personal.unlockAccount(eth.accounts[0]) // 解锁账户
+Unlock account 0xab308aca678b679926295d0119984558f057cc25
+Passphrase:
+true
+&gt; eth.sendTransaction({from: eth.accounts[0], to: eth.accounts[1], value: 4000000000000000000}) // 发送交易
+&quot;0x068b45342587c6922f06199ebf2fd36eb58c6f0dcff03b63c7fd148612e7eeff&quot;
+&gt; eth.blockNumber
+60
+&gt; exit
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br></div></div></li></ol> <h3 id="metamask-钱包连接-geth-私链"><a href="#metamask-钱包连接-geth-私链" class="header-anchor">#</a> MetaMask 钱包连接 geth 私链</h3> <ol><li><p>下载 MetaMask 钱包，自行百度</p></li> <li><p>自定义 RPC（根据开启的私链设置相应信息）</p></li> <li><p>导入账户私钥，由于 geth 中是 keystore 形式，需要转换为 privatekey</p> <ul><li><p>参考资料：https://www.jianshu.com/p/1e5c55529eff</p></li> <li><p>安装包：<code>npm install keythereum</code></p></li> <li><p>写个代码</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>// keystore形式转换为privatekey
+var keythereum = require(&quot;keythereum&quot;);
+//keystore密钥存放目录，在project目录下的keystore目录下，密钥以address命名
+var datadir = &quot;D:/privateChain&quot;;
+var address= &quot;0xab308aca678b679926295d0119984558f057cc25&quot;;
+const password = &quot;123&quot;;
+
+var keyObject = keythereum.importFromFile(address, datadir);
+var privateKey = keythereum.recover(password, keyObject);
+console.log(privateKey.toString('hex'));
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div></li> <li><p>用 node 跑上面代码</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>D:\privateChain\utils&gt;node keystore2pk.js
+40fc5d61cc394c1141e79384234086d2495027e4958e3fc24062372e1ea38fbe
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div></li></ul></li></ol> <h3 id="remix-连接-geth-私链"><a href="#remix-连接-geth-私链" class="header-anchor">#</a> Remix 连接 geth 私链</h3> <ol><li><a href="http://remix.ethereum.org/#optimize=false&amp;runs=200&amp;evmVersion=null&amp;version=soljson-v0.8.7+commit.e28d00a7.js" target="_blank" rel="noopener noreferrer">Remix<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> <ul><li>在 ENVIRONMENT 中选择 Injected Web3</li> <li>会主动去连接 MetaMask 钱包中的网络</li> <li>选择要连接的账户</li></ul></li></ol> <hr> <p>至此，源码运行完事了~接下来要去认真读源码了哦</p></div></section> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">2022/8/15下午2:04:23</span></div></footer> <!----> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-cb1513f6><li class="level-2" data-v-cb1513f6><a href="/blog/blogs/blockchain/go-ethereum.html#go-ethereum-源码运行" class="sidebar-link reco-side-go-ethereum-源码运行" data-v-cb1513f6>go-ethereum 源码运行</a></li><li class="level-3" data-v-cb1513f6><a href="/blog/blogs/blockchain/go-ethereum.html#环境搭建-win10" class="sidebar-link reco-side-环境搭建-win10" data-v-cb1513f6>环境搭建（win10）</a></li><li class="level-3" data-v-cb1513f6><a href="/blog/blogs/blockchain/go-ethereum.html#源码编译" class="sidebar-link reco-side-源码编译" data-v-cb1513f6>源码编译</a></li><li class="level-3" data-v-cb1513f6><a href="/blog/blogs/blockchain/go-ethereum.html#geth-搭建私有链网络" class="sidebar-link reco-side-geth-搭建私有链网络" data-v-cb1513f6>geth 搭建私有链网络</a></li><li class="level-3" data-v-cb1513f6><a href="/blog/blogs/blockchain/go-ethereum.html#metamask-钱包连接-geth-私链" class="sidebar-link reco-side-metamask-钱包连接-geth-私链" data-v-cb1513f6>MetaMask 钱包连接 geth 私链</a></li><li class="level-3" data-v-cb1513f6><a href="/blog/blogs/blockchain/go-ethereum.html#remix-连接-geth-私链" class="sidebar-link reco-side-remix-连接-geth-私链" data-v-cb1513f6>Remix 连接 geth 私链</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="kanbanniang" data-v-5775ee02><div class="banniang-container" style="display:;" data-v-5775ee02><div class="messageBox" style="right:68px;bottom:190px;display:none;" data-v-5775ee02>
+      我是懒鱼，欢迎你的关注 
+    </div> <div class="operation" style="right:90px;bottom:40px;display:none;" data-v-5775ee02><i class="kbnfont kbn-ban-home ban-home" data-v-5775ee02></i> <i class="kbnfont kbn-ban-message message" data-v-5775ee02></i> <i class="kbnfont kbn-ban-close close" data-v-5775ee02></i> <a target="_blank" href="https://vuepress-theme-reco.recoluan.com/views/plugins/kanbanniang.html" data-v-5775ee02><i class="kbnfont kbn-ban-info info" data-v-5775ee02></i></a> <i class="kbnfont kbn-ban-theme skin" style="display:;" data-v-5775ee02></i></div> <canvas id="banniang" width="170" height="240" class="live2d" style="left:5px;bottom:-20px;opacity:0.8;" data-v-5775ee02></canvas></div> <div class="showBanNiang" style="display:none;" data-v-5775ee02>
+    看板娘
+  </div></div><canvas id="vuepress-canvas-cursor"></canvas><div></div><div class="reco-bgm-panel" data-v-b1d3339e><audio id="bgm" src="http://music.163.com/song/media/outer/url?id=20110049.mp3" data-v-b1d3339e></audio> <div class="reco-float-box" style="bottom:30px;z-index:999999;display:none;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><img src="https://y.qq.com/music/photo_new/T002R300x300M000003zD6X70C6Ti6_2.jpg?max_age=2592000" data-v-b1d3339e></div> <div class="reco-bgm-box" style="left:10px;bottom:10px;z-index:999999;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="reco-bgm-cover" style="background-image:url(https://y.qq.com/music/photo_new/T002R300x300M000003zD6X70C6Ti6_2.jpg?max_age=2592000);" data-v-b1d3339e><div class="mini-operation" style="display:none;" data-v-b1d3339e><i class="reco-bgm reco-bgm-pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play" style="display:none;" data-v-b1d3339e></i></div> <div class="falut-message" style="display:none;" data-v-b1d3339e>
+          播放失败
+        </div></div> <div class="reco-bgm-info" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-music music" data-v-b1d3339e></i>River Flows In You</div> <div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-artist" data-v-b1d3339e></i>Martin Ermen</div> <div class="reco-bgm-progress" data-v-b1d3339e><div class="progress-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div> <div class="reco-bgm-operation" data-v-b1d3339e><i class="reco-bgm reco-bgm-last last" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-pause pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play play" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-next next" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-volume1 volume" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-mute mute" style="display:none;" data-v-b1d3339e></i> <div class="volume-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div></div> <div class="reco-bgm-left-box" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><i class="reco-bgm reco-bgm-left" data-v-b1d3339e></i></div></div></div></div></div>
+    <script src="/blog/assets/js/app.767c1d45.js" defer></script><script src="/blog/assets/js/3.5b3b20b0.js" defer></script><script src="/blog/assets/js/1.a7b65e1d.js" defer></script><script src="/blog/assets/js/11.fed4df56.js" defer></script>
+  </body>
+</html>
