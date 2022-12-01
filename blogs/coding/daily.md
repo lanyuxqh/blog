@@ -56,5 +56,26 @@ FreqStack.prototype.pop = function () {
 }
 ```
 
+### 12.1 [找到最近的有相同 X 或 Y 坐标的点](https://leetcode.cn/problems/find-nearest-point-that-has-the-same-x-or-y-coordinate/)
 
+- 题目
+  - 找到最近的有相同 X 或 Y 坐标的点
+- 方法
+  - 枚举数组中所有点就完事了
 
+```js
+var nearestValidPoint = function (x, y, points) {
+  let minDistance = Infinity,
+    res = -1
+  for (let i = 0; i < points.length; i++) {
+    const p = points[i]
+    if (p[0] === x || p[1] === y) {
+      if (Math.abs(p[0] - x) + Math.abs(p[1] - y) < minDistance) {
+        minDistance = Math.abs(p[0] - x) + Math.abs(p[1] - y)
+        res = i
+      }
+    }
+  }
+  return res
+}
+```
