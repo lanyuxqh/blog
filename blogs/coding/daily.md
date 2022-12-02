@@ -79,3 +79,54 @@ var nearestValidPoint = function (x, y, points) {
   return res
 }
 ```
+
+### 12.2 [移动所有球到每个盒子所需的最小操作数](https://leetcode.cn/problems/minimum-number-of-operations-to-move-all-balls-to-each-box/)
+
+- 题目
+  - 将所有小球移动到第 i 个盒子所需的 最小 操作数。
+- 方法一
+  - 模拟，暴力枚举，双重循环
+
+```js
+var minOperations = function (boxes) {
+  const n = boxes.length
+  let res = new Array(n).fill(0)
+  for (let i = 0; i < n; i++) {
+    let cnt = 0
+    for (let j = 0; j < n; j++) {
+      if (boxes[j] === '1') {
+        cnt += Math.abs(j - i)
+      }
+    }
+    res[i] = cnt
+  }
+  return res
+}
+```
+
+- 方法二
+  - res[i] = res[i-1] + left - right left: i 左侧球数量，right: i 自身和右侧球数量
+  - 先遍历一次得到 res[0]、初始 left 和 right，再遍历一次，依据递推公式计算 res[i]，同时更新 left 和 right
+
+```js
+var minOperations = function (boxes) {
+  const n = boxes.length
+  let left = boxes[0] === '1' ? 1 : 0,
+    right = 0
+  let res = new Array(n).fill(0)
+  for (let i = 1; i < n; i++) {
+    if (boxes[i] === '1') {
+      right++
+      res[0] += i
+    }
+  }
+  for (let i = 1; i < n; i++) {
+    res[i] = res[i - 1] + left - right
+    if (boxes[i] === '1') {
+      right--
+      left++
+    }
+  }
+  return res
+}
+```
