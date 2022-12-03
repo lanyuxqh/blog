@@ -130,3 +130,31 @@ var minOperations = function (boxes) {
   return res
 }
 ```
+
+### 12.3 [字符串中第二大的数字](https://leetcode.cn/problems/second-largest-digit-in-a-string/)
+
+- 题目
+  - 给你一个混合字符串 s ，请你返回 s 中 第二大 的数字，如果不存在第二大的数字，请你返回 -1 。
+- 方法
+  - 一次遍历，记录 第一大 first 和 第二大 second
+  - 当前 num 大于 first，first 替换 second，num 替换 first (注意顺序！)
+  - 当前 num 小于 first 且大于 second，num 替换 second（注意 num 等于 first 情况！）
+
+```js
+var secondHighest = function (s) {
+  let first = -1,
+    second = -1
+  for (let c of s) {
+    if (c >= '0' && c <= '9') {
+      const num = c.charCodeAt() - '0'.charCodeAt()
+      if (num > first) {
+        second = first
+        first = num
+      } else if (num < first && num > second) {
+        second = num
+      }
+    }
+  }
+  return second
+}
+```
