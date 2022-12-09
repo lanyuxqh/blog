@@ -194,3 +194,21 @@ var closestCost = function (baseCosts, toppingCosts, target) {
   return res
 }
 ```
+
+### 12.9 [断一个数字是否可以表示成三的幂的和](https://leetcode.cn/problems/check-if-number-is-a-sum-of-powers-of-three/)
+
+- 题目
+  - 给你一个整数 n ，如果你可以将 n 表示成若干个不同的三的幂之和，请你返回 true ，否则请返回 false 。
+- 方法
+  - 数学，三进制，举例：12---110 91---10101 21---210（说明有两个相同的 3^2，不符合）
+  - 对 n 除 3 取余，若余数为 2，则不符合，直到 n 为 0
+
+```js
+var checkPowersOfThree = function (n) {
+  while (n) {
+    if (n % 3 === 2) return false
+    n = Math.floor(n / 3)
+  }
+  return true
+}
+```
