@@ -135,7 +135,7 @@ var minOperations = function (boxes) {
 
 - 题目
   - 给你一个混合字符串 s ，请你返回 s 中 第二大 的数字，如果不存在第二大的数字，请你返回 -1 。
-- 方法
+- 方法一
   - 一次遍历，记录 第一大 first 和 第二大 second
   - 当前 num 大于 first，first 替换 second，num 替换 first (注意顺序！)
   - 当前 num 小于 first 且大于 second，num 替换 second（注意 num 等于 first 情况！）
@@ -156,5 +156,41 @@ var secondHighest = function (s) {
     }
   }
   return second
+}
+```
+
+### 12.4 [最接近目标价格的甜点成本](https://leetcode.cn/problems/closest-dessert-cost/)
+
+- 题目
+  - 返回最接近 target 的甜点成本。如果有多种方案，返回 成本相对较低 的一种。
+- 方法
+  - 深搜，遍历基料，枚举配料
+
+```js
+var closestCost = function (baseCosts, toppingCosts, target) {
+  const n = baseCosts.length,
+    m = toppingCosts.length
+  const dfs = (sum, startIndex) => {
+    if (sum === target) {
+      res = target
+      return
+    }
+    if (
+      Math.abs(target - sum) < Math.abs(target - res) ||
+      (Math.abs(target - sum) === Math.abs(target - res) && sum < res)
+    ) {
+      res = sum
+    }
+    for (let i = startIndex; i < m; i++) {
+      for (let j = 1; j <= 2; j++) {
+        dfs(sum + toppingCosts[i] * j, i + 1)
+      }
+    }
+  }
+  let res = Infinity
+  for (let i = 0; i < n; i++) {
+    dfs(baseCosts[i], 0)
+  }
+  return res
 }
 ```
