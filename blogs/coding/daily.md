@@ -212,3 +212,32 @@ var checkPowersOfThree = function (n) {
   return true
 }
 ```
+
+### 12.12 [所有子字符串美丽值之和](https://leetcode.cn/problems/sum-of-beauty-of-all-substrings/)
+
+- 题目
+  - 给你一个字符串 s ，请你返回它所有子字符串的 美丽值 之和。一个字符串的 美丽值 定义为：出现频率最高字符与出现频率最低字符的出现次数之差。
+- 方法
+  - 双层循环遍历每个子串，维护字符频率的哈希表，计算每个子串的美丽值。
+
+```js
+var beautySum = function (s) {
+  const n = s.length
+  let res = 0
+  for (let i = 0; i < n; i++) {
+    const arr = new Array(26).fill(0)
+    let maxF = 0
+    for (let j = i; j < n; j++) {
+      let pos = s[j].charCodeAt() - 'a'.charCodeAt()
+      arr[pos]++
+      if (arr[pos] > maxF) maxF = arr[pos]
+      let minF = n
+      for (let k = 0; k < 26; k++) {
+        if (arr[k] > 0 && arr[k] < minF) minF = arr[k]
+      }
+      res += maxF - minF
+    }
+  }
+  return res
+}
+```
