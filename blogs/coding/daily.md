@@ -241,3 +241,81 @@ var beautySum = function (s) {
   return res
 }
 ```
+
+### 12.17 [通过连接另一个数组的子数组得到一个数组](https://leetcode.cn/problems/form-array-by-concatenating-subarrays-of-another-array/)
+
+- 题目
+  - 给你一个长度为 n 的二维整数数组 groups ，同时给你一个整数数组 nums 。你是否可以从 nums 中选出 n 个 不相交 的子数组，使得第 i 个子数组与 groups[i] （下标从 0 开始）完全相同
+- 方法一
+  - 双指针遍历，i 遍历 groups，j 遍历 nums，用 check 函数判断 groups[i] 与 nums[j] 开头的子数组是否相同。
+
+```js
+var canChoose = function (groups, nums) {
+  const check = (group, index) => {
+    for (let i = 0; i < group.length; i++) {
+      if (group[i] !== nums[index + i]) {
+        return false
+      }
+    }
+    return true
+  }
+  const n = groups.length,
+    m = nums.length
+  let i = 0
+  for (let j = 0; j < m && i < n; ) {
+    if (check(groups[i], j)) {
+      j += groups[i].length
+      i++
+    } else {
+      j++
+    }
+  }
+  return i === n
+}
+```
+
+- 方法二
+  - 双指针和 KMP 匹配，i 指向 groups，j 指向 nums，使用 [strStr](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/) 函数找到在 nums[j]开头的数组中 groups[i]模式数组的下标。
+  - Knuth-Morris-Pratt 算法
+    - KMP 的主要思想是**当出现字符串不匹配时，可以知道一部分之前已经匹配的文本内容，可以利用这些信息避免从头再去做匹配了**。
+    - next 数组就是一个**前缀表**（**最长相同前后缀长度**）。**前缀表是用来回退的，它记录了模式串与主串(文本串)不匹配的时候，模式串应该从哪里开始重新匹配**。
+    - 字符串的前缀是指不包含最后一个字符的所有以第一个字符开头的连续子串；后缀是指不包含第一个字符的所有以最后一个字符结尾的连续子串。
+
+```js
+var canChoose = function (groups, nums) {
+  const strStr = (haystack, needle) => {
+    // kmp
+    const getNext = str => {
+      const next = [0]
+      let j = 0
+      for (let i = 1; i < str.length; i++) {
+        while (j > 0 && str[i] !== str[j]) j = next[j - 1]
+        if (str[i] === str[j]) j++
+        next.push(j)
+      }
+      return next
+    }
+    const next = getNext(needle)
+    let j = 0
+    for (let i = 0; i < haystack.length; i++) {
+      while (j > 0 && haystack[i] !== needle[j]) j = next[j - 1]
+      if (haystack[i] === needle[j]) j++
+      if (j === needle.length) return i - needle.length + 1
+    }
+    return -1
+  }
+  const n = groups.length,
+    m = nums.length
+  let i = 0
+  for (let j = 0; j < m && i < n; ) {
+    const index = strStr(nums.slice(j), groups[i])
+    if (index !== -1) {
+      j = index + groups[i].length
+      i++
+    } else {
+      return false
+    }
+  }
+  return i === n
+}
+```
